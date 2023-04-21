@@ -11,21 +11,19 @@ app.use(express.json());
 // Endpoint for searching products by name and price
 app.get("/products/:name/:price", (req, res) => {
   const { name, price } = req.params;
-
-  // Find the product with matching name and price
-  const product = products.find((p) => p.name === name && p.price === Number(price));
-
+  
+  // Search for product in the products array
+  const product = products.find(p => p.name === name && p.price == price);
+  
   if (product) {
-    // Return the product as a JSON response
+    // Return the product object if found
     res.status(200).json({
       status: "success",
       message: "Product fetched successfully",
-      data: {
-        product,
-      },
+      data: { product },
     });
   } else {
-    // Return a 404 error with a message if no matching product is found
+    // Return error message if product is not found
     res.status(404).json({
       status: "failed",
       message: "Product not found!",
